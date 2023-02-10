@@ -3,6 +3,8 @@
 cmake_minimum_required(VERSION 3.20.0)
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
-project(hello_world)
+project(HomeTempSensor)
 
 target_sources(app PRIVATE src/main.c)
+target_sources(app PRIVATE src/led/led.c)
+target_sources(app PRIVATE src/i2c/bmp280/bmp280.c)
