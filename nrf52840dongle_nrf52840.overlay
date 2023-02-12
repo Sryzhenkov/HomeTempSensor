@@ -17,4 +17,11 @@
         reg = < 0x76 >;
         label = "BMP280";
     };
+
+    ssd1306: ssd1306@3C{
+        compatible = "i2c-device";
+        reg = < 0x3C >;
+        label = "SSD1306";
+    };
+    
 };

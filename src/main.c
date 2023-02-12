@@ -11,9 +11,10 @@ static const struct gpio_dt_spec ledGreen = GPIO_DT_SPEC_GET(LED_GREEN_NODE, gpi
 int LedInit(const struct gpio_dt_spec*, gpio_flags_t);
 
 Global_Info_t globalInfo_s = {
-								.bmp280 = I2C_DT_SPEC_GET(BMP280_NODE),
+								.bmp280  = I2C_DT_SPEC_GET(BMP280_NODE),
+								.ssd1306 = I2C_DT_SPEC_GET(SSD1306_NODE),
 }; 
-/*
+
 void main(void)
 {	
 	//LedInit(&ledRed,GPIO_OUTPUT_ACTIVE);
@@ -22,16 +23,17 @@ void main(void)
 	//gpio_pin_set_dt(&ledRed, 0);
 	gpio_pin_set_dt(&ledGreen, 1);
 
-	BMP280_Init();
+	//BMP280_Init();
+	SSD1306_Init();
 
 	while(1)
 		{		
 			k_msleep(1000);	
-			BMP280_ReadTemp();	
+			//BMP280_ReadTemp();	
 		}
 }
-*/
-#define STACKSIZE 1024
+
+/*#define STACKSIZE 1024
 
 #define THREAD0_PRIORITY 7
 #define THREAD1_PRIORITY 7
@@ -39,7 +41,7 @@ void main(void)
 void thread0(void)
 {
 	while (1) {
-		  LOG_INF("Hello, I am thread0\n");
+		  LOG_INF("Hello, I am 000\n");
           //k_yield();
 		  k_msleep(1000);
 	}
@@ -48,7 +50,7 @@ void thread0(void)
 void thread1(void)
 {
 	while (1) {
-          LOG_INF("Hello, I am thread1\n");		  
+          LOG_INF("Hello, I am 111\n");		  
 		  //k_yield();		  
 		  k_msleep(1000);
 	}
@@ -56,3 +58,4 @@ void thread1(void)
 
 K_THREAD_DEFINE(thread0_id, STACKSIZE, thread0, NULL, NULL, NULL, THREAD0_PRIORITY, 0, 0);
 K_THREAD_DEFINE(thread1_id, STACKSIZE, thread1, NULL, NULL, NULL, THREAD1_PRIORITY, 0, 0);
+*/

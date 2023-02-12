@@ -48,12 +48,6 @@
 #define BMP280_REG_DP9_LOW      0x9E
 #define BMP280_REG_DP9_HIGH     0x9F
 
-enum BMP280_error_code{
-    DEVICE_ALL_OK = 0,
-    DEVICE_NOT_READY = -1,
-    DEVICE_ID_INCORRECR = -2,
-};
-
 typedef struct
 {
     uint16_t DT1;
