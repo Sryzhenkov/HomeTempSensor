@@ -6,6 +6,28 @@
 
 #define SSD1306_NODE DT_NODELABEL(ssd1306)
 
+#define SSD1306_COMMAND_BYTE    0x00
+#define SSD1306_DATA_BYTE       0x40
+
+//******** Fundamental Command Table ********//
+
+//******** Scrolling Command Table ********//
+
+//******** Addressing Setting Command Table ********//
+
+//******** Hardware CFG Command Table ********//
+#define SSD1306_SET_DISPLAY_START_LINE  0x40
+#define SSD1306_SET_SEG_RE_MAP_0_127    0xA0
+#define SSD1306_SET_SEG_RE_MAP_127_0    0xA1
+#define SSD1306_SET_MUX_RATIO           0xA8
+#define SSD1306_SET_COM_OUTPUT_NORMAL   0xC0
+#define SSD1306_SET_COM_OUTPUT_RE_MAP   0xC8
+#define SSD1306_SET_DISPLAY_OFFSET      0xD3
+#define SSD1306_SET_COM_PINS            0xDA
+
+//******** Timing & Driving Scheme Setting Command Table ********//
+
+
 extern int32_t SSD1306_Init();
 
 static const char ASCII[][5] =
