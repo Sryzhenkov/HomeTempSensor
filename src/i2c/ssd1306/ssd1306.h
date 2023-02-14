@@ -10,11 +10,15 @@
 #define SSD1306_DATA_BYTE       0x40
 
 //******** Fundamental Command Table ********//
-
+#define SSD1306_SET_CONTRAST_CONTROL    0x81
+#define SSD1306_ENT_DISPLAY_RES_TO_RAM  0xA4
+#define SSD1306_SET_NORMAL_DISPLAY      0xA6
+#define SSD1306_SET_DISPLAY_ON          0xAF
+#define SSD1306_SET_DISPLAY_OFF         0xAE
 //******** Scrolling Command Table ********//
 
 //******** Addressing Setting Command Table ********//
-
+#define SSD1306_SET_MEM_ADDR_MODE       0x20
 //******** Hardware CFG Command Table ********//
 #define SSD1306_SET_DISPLAY_START_LINE  0x40
 #define SSD1306_SET_SEG_RE_MAP_0_127    0xA0
@@ -26,7 +30,9 @@
 #define SSD1306_SET_COM_PINS            0xDA
 
 //******** Timing & Driving Scheme Setting Command Table ********//
+#define SSD1306_SET_DISPLAY_CLOCK       0xD5
 
+#define SSD1306_CHARGE_PUMP_SETTING     0x8D
 
 extern int32_t SSD1306_Init();
 

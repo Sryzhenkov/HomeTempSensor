@@ -3,39 +3,20 @@
 LOG_MODULE_REGISTER(ssd1306);
 
 static uint8_t ssd1306InitArray[] = {
-						SSD1306_COMMAND_BYTE, 0xA8, 0x3F,
-						SSD1306_COMMAND_BYTE, 0xD3, 0x00,
-						SSD1306_COMMAND_BYTE, 0x40, 0xFF,	// 6
-						SSD1306_COMMAND_BYTE, 0xA1, 0xFF,	// 9
-						SSD1306_COMMAND_BYTE, 0xC8, 0xFF,	// 12
-						SSD1306_COMMAND_BYTE, 0xDA, 0x12,
-						SSD1306_COMMAND_BYTE, 0x81, 0x7F,
-						SSD1306_COMMAND_BYTE, 0xA4, 0xFF,	// 21
-						SSD1306_COMMAND_BYTE, 0xA6, 0xFF,	// 24
-						SSD1306_COMMAND_BYTE, 0xD5, 0x80,
-						SSD1306_COMMAND_BYTE, 0x8D, 0x14,
-						SSD1306_COMMAND_BYTE, 0xAF, 0xFF,	// 33
-						SSD1306_COMMAND_BYTE, 0x20, 0x10,
-						SSD1306_COMMAND_BYTE, 0xAE
-};
-
-/*static uint8_t ssd1306InitArray[] = {
-										0xA8, 0x3F,
-										0xD3, 0x00,
-										0x40, 0xFF,	// 4
-										0xA1, 0xFF,	// 6
-										0xC8, 0xFF,	// 8
-										0xDA, 0x12,
-										0x81, 0x7F,
-										0xA4, 0xFF,	// 14
-										0xA6, 0xFF,	// 16
-										0xD5, 0x80,
-										0x8D, 0x14,
-										0xAF, 0xFF,	// 22
-										0x20, 0x10,
-										0xAE
-};*/
-
+										SSD1306_COMMAND_BYTE, SSD1306_SET_MUX_RATIO, 			0x3F,
+										SSD1306_COMMAND_BYTE, SSD1306_SET_DISPLAY_OFFSET, 		0x00,
+										SSD1306_COMMAND_BYTE, SSD1306_SET_DISPLAY_START_LINE,	0xFF,	// 6
+										SSD1306_COMMAND_BYTE, SSD1306_SET_SEG_RE_MAP_127_0, 	0xFF,	// 9
+										SSD1306_COMMAND_BYTE, SSD1306_SET_COM_OUTPUT_RE_MAP, 	0xFF,	// 12
+										SSD1306_COMMAND_BYTE, SSD1306_SET_COM_PINS, 			0x12,
+										SSD1306_COMMAND_BYTE, SSD1306_SET_CONTRAST_CONTROL, 	0x7F,
+										SSD1306_COMMAND_BYTE, SSD1306_ENT_DISPLAY_RES_TO_RAM, 	0xFF,	// 21
+										SSD1306_COMMAND_BYTE, SSD1306_SET_NORMAL_DISPLAY, 		0xFF,	// 24
+										SSD1306_COMMAND_BYTE, SSD1306_SET_DISPLAY_CLOCK, 		0x80,
+										SSD1306_COMMAND_BYTE, SSD1306_CHARGE_PUMP_SETTING, 		0x14,
+										SSD1306_COMMAND_BYTE, SSD1306_SET_DISPLAY_ON, 			0xFF,	// 33
+										SSD1306_COMMAND_BYTE, SSD1306_SET_MEM_ADDR_MODE, 		0x10
+									};
 
 void oled_print(char str[])
 {
@@ -85,7 +66,7 @@ int32_t SSD1306_Init()
 
 	i2c_write_dt(&(p_globalInfo->ssd1306), (ssd1306InitArray+36), 3);
 
-	uint8_t pos[] = {0x40,0x00+( 0x0F & 0), 0x40,0x10+( 0x0F & (0 >> 4)), 0x40,0xB0 + 0};
+	uint8_t pos[] = {SSD1306_COMMAND_BYTE,0x00+( 0x0F & 0), SSD1306_COMMAND_BYTE,0x10+( 0x0F & (0 >> 4)), SSD1306_COMMAND_BYTE,0xB0 + 0};
 
 	i2c_write_dt(&(p_globalInfo->ssd1306), pos, 2);
 	i2c_write_dt(&(p_globalInfo->ssd1306), pos+2, 2);
@@ -93,9 +74,9 @@ int32_t SSD1306_Init()
 
 	int i,j;
 
-	uint8_t clear[] = {0x40,0xFF};
+	uint8_t clear[] = {0x40,0x00};
 
-	for(i=0;i<8;i++)
+	for(i=0;i<1;i++)
 	{
 		for(j=0;j<128;j++)
 		{
@@ -103,40 +84,34 @@ int32_t SSD1306_Init()
 		}
 	}
 
-	uint8_t pos2[] = {0x40,0x00+( 0x0F & 30), 0x40,0x10+( 0x0F & (30 >> 4)), 0x40,0xB0 + 3};
-/*
+//	uint8_t pos2[] = {0x40,0x00+( 0x0F & 30), 0x40,0x10+( 0x0F & (30 >> 4)), 0x40,0xB0 + 3};
+
 	i2c_write_dt(&(p_globalInfo->ssd1306), pos, 2);
 	i2c_write_dt(&(p_globalInfo->ssd1306), pos+2, 2);
 	i2c_write_dt(&(p_globalInfo->ssd1306), pos+4, 2);
-*/
-//	oled_print("Hello World");
 
-/*
-	//############ READ_ID ############//
+	oled_print("Hello World");
 
-	i2c_write_read_dt(&(p_globalInfo->bmp280), bmp280InitArray, 1, (bmp280InitArray+1), 1);
-
-	if(*(bmp280InitArray+1) != BMP280_VALUE_ID)	return DEVICE_ID_INCORRECR;
-
-	LOG_INF("CheckID - OK\r");
-
-	//############  RESET  ############//
-	i2c_write_dt(&(p_globalInfo->bmp280), (bmp280InitArray+2), 2);
-
-	uint8_t countTry = 0;
-
-	while(BMP280_Status(&(p_globalInfo->bmp280)))
-		{
-			LOG_INF("reset try %u\r",countTry);
-
-			if(!(countTry++ <= 10))	break;
-		}
-	//############  CONFIG ############//
-	i2c_write_dt(&(p_globalInfo->bmp280), (bmp280InitArray+4), 2);
-	//############   MODE  ############//
-	i2c_write_dt(&(p_globalInfo->bmp280), (bmp280InitArray+6), 2);
-*/
 	LOG_INF("Init Ok\r");
 
 	return DEVICE_ALL_OK;
+}
+
+void clearFullScreen(const struct i2c_dt_spec* dev)
+{
+	uint8_t pos[] = {
+						SSD1306_COMMAND_BYTE,0x00, 
+						SSD1306_COMMAND_BYTE,0x10, 
+						SSD1306_COMMAND_BYTE,0xB0
+					};
+	
+	for(uint8_t i = 0; i < 3; i++) 
+		{
+			i2c_write_dt(dev, pos+(i*2), 2);
+		}
+	
+	for(uint32_t i = 0; i < (128*8); i++)
+		{
+
+		}
 }
