@@ -26,10 +26,46 @@ void main(void)
 	//BMP280_Init();
 	SSD1306_Init();
 
+	    Global_Info_t* p_globalInfo = &globalInfo_s;
+				uint8_t pos[] = {
+						SSD1306_COMMAND_BYTE,0x00, 
+						SSD1306_COMMAND_BYTE,0x10, 
+						SSD1306_COMMAND_BYTE,0xB0
+					};
+
 	while(1)
 		{		
-			k_msleep(1000);	
+			//k_msleep(1000);	
 			//BMP280_ReadTemp();	
+
+							k_msleep(1500);
+
+
+
+						for(uint8_t i = 0; i < 3; i++) 
+							{
+								i2c_write_dt(&(p_globalInfo->ssd1306), pos+(i*2), 2);
+							}	
+				
+				uint8_t bt_logo2[] = {0x40,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+
+				i2c_write_dt(&(p_globalInfo->ssd1306), bt_logo2, 9);
+
+				oled_print("Hello World");
+
+				k_msleep(1500);
+
+				
+						for(uint8_t i = 0; i < 3; i++) 
+							{
+								i2c_write_dt(&(p_globalInfo->ssd1306), pos+(i*2), 2);
+							}	
+
+				uint8_t bt_logo[] = {0x40,0x00,0x28,0x10,0xFE,0x54,0x28,0x00,0x00};
+
+				i2c_write_dt(&(p_globalInfo->ssd1306), bt_logo, 9);
+
+				oled_print("Hello World");
 		}
 }
 

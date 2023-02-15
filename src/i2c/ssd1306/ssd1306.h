@@ -9,6 +9,9 @@
 #define SSD1306_COMMAND_BYTE    0x00
 #define SSD1306_DATA_BYTE       0x40
 
+#define SSD1306_NOP_BYTE        0x00
+
+
 //******** Fundamental Command Table ********//
 #define SSD1306_SET_CONTRAST_CONTROL    0x81
 #define SSD1306_ENT_DISPLAY_RES_TO_RAM  0xA4
